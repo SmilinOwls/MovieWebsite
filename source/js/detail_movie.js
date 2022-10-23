@@ -17,13 +17,13 @@ export default {
         //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
         alert(this.movie_store.id_cur_movie);
         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
-        fetch("https://mocki.io/v1/2c505bbd-7916-4536-a5c5-6180bb962742").then(res => res.json().then(data => {
+        fetch(url).then(res => res.json().then(data => {
             
             this.movie_store.current_movie = data;
             this.actors = this.movie_store.current_movie.actorList;
           }))
 
-          fetch("https://mocki.io/v1/7d7f0352-07f0-4940-bde1-fdc09e32b1b8").then(res => res.json().then(data => {
+          fetch(BASE_URL + this.query2 + KEY_API + '/' + this.movie_store.id_cur_movie).then(res => res.json().then(data => {
             console.log(data)
             this.reviews = data.items;
           }))

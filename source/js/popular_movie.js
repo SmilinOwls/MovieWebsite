@@ -34,7 +34,7 @@ export default {
       var movies = [];
         (async () => {
            //BASE_URL + this.query + KEY_API
-          const res = await fetch(`https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7`);
+          const res = await fetch(BASE_URL + this.query + KEY_API);
           const data = await res.json();
           movies = data.items;
           const len = data.items.length;

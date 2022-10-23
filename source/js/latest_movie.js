@@ -18,7 +18,7 @@ export default {
     mounted() {
 
          //BASE_URL + this.query + KEY_API
-        fetch("https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7").then(res => res.json().then(data => {
+        fetch(BASE_URL + this.query + KEY_API).then(res => res.json().then(data => {
             console.log(data.items);
             this.movie_store.lastest_movies = data.items.slice(0,5);
             this.active_item = this.movie_store.lastest_movies[0];

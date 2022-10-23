@@ -11,7 +11,7 @@ export default {
         }
     },
     mounted() {
-        fetch("https://mocki.io/v1/08a5738b-c2c9-4574-bab7-4a75eee36aee").then(res => res.json().then(data => {
+        fetch(BASE_URL + this.query + KEY_API + '/' + encodeURI(this.movie_store.query)).then(res => res.json().then(data => {
             console.log(data.results);
             this.query_movies = data.results;
           }))

@@ -10,7 +10,7 @@ export default{
     },
 
     methods:{
-      transData(item){
+      trans(item){
         this.$emit('hideMain','detail_movie');
         this.movie_store.id_cur_movie = item.id;
     },
@@ -25,7 +25,7 @@ export default{
     <div class="carousel-inner adjust">
       <div class="carousel-item active">
         <div class="cards-wrapper">
-        <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="transData(item)">
+        <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="trans(item)">
           <img :src="item.image" class="card-img-top" alt="...">
           <div class="card-body disabled">
               <p class="card-text">{{item.fullTitle}}</p>
@@ -35,7 +35,7 @@ export default{
       </div>
       <div class="carousel-item" v-for="items in this.list">
         <div class="cards-wrapper">
-          <div class="card text-white bg-dark d-none d-md-block" v-for="item in items" @click="transData(item)">
+          <div class="card text-white bg-dark d-none d-md-block" v-for="item in items" @click="trans(item)">
             <img :src="item.image" class="card-img-top" alt="...">
             <div class="card-body disabled">
               <p class="card-text">{{item.fullTitle}}</p>

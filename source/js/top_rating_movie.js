@@ -18,7 +18,7 @@ export default {
     methods:{
       hideMain(item){
         this.$emit('update',item);
-      },
+      }
     },
     mounted() {
 
@@ -58,5 +58,5 @@ export default {
     template: `<nav class="navbar navbar-expand-lg navbar-light bg-transparent rounded">
     <a class="navbar-brand" style="font-weight:600">Top Rating</a>
     </nav>
-    <rating_movie :list='movie_store.topRating_movies' :nums='nums' :active_item='active_item' @transData='hideMain'/>`
+    <rating_movie :list='movie_store.topRating_movies' :nums='nums' :active_item='active_item' @hideMain='hideMain'/>`
 }

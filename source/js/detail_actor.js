@@ -21,13 +21,13 @@ export default {
             console.log(data);
             this.movie_store.current_actor = data;
           })) 
-
-          $(function(){
-            $('#table_id').DataTable();
-          })
     },
     
     methods:{
+        hideMain(data){
+            this.$emit('update','detail_movie');
+            this.movie_store.id_cur_movie = data
+        }
     },
     template:
     `
@@ -59,7 +59,7 @@ export default {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="actor in this.movie_store.current_actor.castMovies">
+            <tr v-for="actor in this.movie_store.current_actor.castMovies" @click="hideMain(actor.id)">
                 <th scope="col">{{actor.id}}</th>
                 <td>{{actor.role}}</td>
                 <td>{{actor.title}}</td>

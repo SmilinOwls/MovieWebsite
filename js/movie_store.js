@@ -6,5 +6,7 @@ export default reactive({
     topRating_movies: [],
     current_movie: [],
     id_cur_movie: "",
+    id_cur_actor: "",
+    current_actor: [],
     query: ""
 })

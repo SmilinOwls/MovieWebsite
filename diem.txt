@@ -8,7 +8,7 @@ thông tin cơ bản: poster, title, rated, length,...
 thông tin).
 ✓ 1 điểm: Danh sách 15~30 Movie thứ hạng cao nhất hiển thị như yêu cầu
 mà KHÔNG clone code.
-✓ 0.5 điểm: liên kết để chuyển sang xem chi tiết Movie ở bất kỳ Movie nào trên
+✓ 1 điểm: liên kết để chuyển sang xem chi tiết Movie ở bất kỳ Movie nào trên
 bất kỳ danh sách nào.
 ✓ 1 điểm: Thực hiện tìm kiếm Movie theo tên và hiển thị theo dạng CardView
 với các thông tin cơ bản: poster, title, rated, length,...
@@ -22,4 +22,4 @@ xem chi tiết Movie) cần hiển thị được hình ảnh, tên diễn viên
 ✓ 0 điểm: có phân trang ở các danh sách: kết quả tìm kiếm, danh sách phim
 của diễn viên.
 
-=> Điểm tự đánh giá: 11.5đ
+=> Điểm tự đánh giá: 12đ

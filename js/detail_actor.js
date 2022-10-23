@@ -11,6 +11,7 @@ export default {
     mounted() {
         //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
         const url = BASE_URL + this.query + KEY_API + '/' + this.movie_store.id_cur_actor;
+        console.log(url);
         fetch("https://mocki.io/v1/7a4943b7-6557-4339-8ae4-6656ed3459e2").then(res => res.json().then(data => {
             console.log(data);
             this.movie_store.current_actor = data;

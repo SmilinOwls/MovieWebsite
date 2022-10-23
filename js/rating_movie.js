@@ -22,7 +22,7 @@ export default{
             <li data-target="#newcarouselExampleControls" data-slide-to="0" class="active"></li>
             <li data-target="#newcarouselExampleControls" :data-slide-to="num+1" v-for="num in this.nums"></li>
         </ol>
-    <div class="carousel-inner">
+    <div class="carousel-inner adjust">
       <div class="carousel-item active">
         <div class="cards-wrapper">
         <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="transData(item)">

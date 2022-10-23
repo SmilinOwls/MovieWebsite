@@ -27,8 +27,6 @@ export default {
             console.log(data)
             this.reviews = data.items;
           }))
-
-          
           
     },
     methods:{

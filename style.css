@@ -109,7 +109,7 @@ body{
     padding: 1em;
   }
 
-  .card:hover
+  .adjust .card:hover
   {
     transform: scale(1.8);
     min-height: 750px !important;
@@ -296,6 +296,4 @@ body{
     margin: -8px 5px 0 0;
   }
 }
-body {
-  background: #212121;
-}
+

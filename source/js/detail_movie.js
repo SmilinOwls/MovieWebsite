@@ -15,7 +15,6 @@ export default {
         //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
         //https://imdb-api.com/en/API/Title/k_jro07wuj/tt1877830/FullActor,Posters,Images,Ratings,
         //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
-        alert(this.movie_store.id_cur_movie);
         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
         fetch(url).then(res => res.json().then(data => {
             

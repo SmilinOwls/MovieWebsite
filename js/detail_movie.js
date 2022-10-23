@@ -17,11 +17,10 @@ export default {
         //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
 
         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
-        console.log(url)
         fetch("https://mocki.io/v1/2c505bbd-7916-4536-a5c5-6180bb962742").then(res => res.json().then(data => {
             
             this.movie_store.current_movie = data;
-            this.actors = this.movie_store.current_movie.actorList.map((obj) => obj.name)
+            this.actors = this.movie_store.current_movie.actorList;
           }))
 
           fetch("https://mocki.io/v1/7d7f0352-07f0-4940-bde1-fdc09e32b1b8").then(res => res.json().then(data => {
@@ -33,7 +32,10 @@ export default {
           
     },
     methods:{
-
+        actorID(item){
+            this.$emit('update','detail_actor');
+            this.movie_store.id_cur_actor = item;
+        }
     },
     template:
     `<div class="movie-container">
@@ -48,7 +50,7 @@ export default {
             <p class="card-text">Year: {{this.movie_store.current_movie.year}}</p>
             <p class="card-text">Directors: {{this.movie_store.current_movie.directors}}</p>
             <p class="card-text">Genres: {{this.movie_store.current_movie.genres}}</p>
-            <p class="card-text img-movie">Actors: <span class="actor" v-for="actor in this.actors">{{actor}}, <span></p>
+            <p class="card-text img-movie">Actors: <span class="actor" v-for="actor in this.actors" @click="actorID(actor.id)">{{actor.name}}, </span></p>
             <p class="card-text"><small class="text-muted">Summary: {{this.movie_store.current_movie.plot}}</small></p>
             </div>
         </div>

@@ -1,3 +1,2240 @@
+commit 80ab85c950abb4998afec0ace34ff4ce32667b07
+Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+Date:   Sun Oct 23 20:57:13 2022 +0700
+
+    Remove debug msg
+
+diff --git a/source/index.html b/source/index.html
+index a131fb6..7b3a32b 100644
+--- a/source/index.html
++++ b/source/index.html
+@@ -42,7 +42,7 @@
+     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+ 
+   <script>
+-    const KEY_API = '/k_jro07wuj';
++    const KEY_API = '/k_gv87tkjj';
+     const BASE_URL = 'https://imdb-api.com/en/API/';
+ 
+   </script>
+diff --git a/source/js/detail_movie.js b/source/js/detail_movie.js
+index e0a22e4..517e3b5 100644
+--- a/source/js/detail_movie.js
++++ b/source/js/detail_movie.js
+@@ -15,7 +15,6 @@ export default {
+         //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
+         //https://imdb-api.com/en/API/Title/k_jro07wuj/tt1877830/FullActor,Posters,Images,Ratings,
+         //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
+-        alert(this.movie_store.id_cur_movie);
+         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
+         fetch(url).then(res => res.json().then(data => {
+             
+
+commit fbbff143a6fffe6580e93d808fa60a43b7177a84
+Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+Date:   Sun Oct 23 20:43:30 2022 +0700
+
+    Change API source
+
+diff --git a/source/js/detail_actor.js b/source/js/detail_actor.js
+index 15b6bdd..2288fb2 100644
+--- a/source/js/detail_actor.js
++++ b/source/js/detail_actor.js
+@@ -17,7 +17,7 @@ export default {
+         //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
+         const url = BASE_URL + this.query + KEY_API + '/' + this.movie_store.id_cur_actor;
+         console.log(url);
+-        fetch("https://mocki.io/v1/7a4943b7-6557-4339-8ae4-6656ed3459e2").then(res => res.json().then(data => {
++        fetch(url).then(res => res.json().then(data => {
+             console.log(data);
+             this.movie_store.current_actor = data;
+           })) 
+diff --git a/source/js/detail_movie.js b/source/js/detail_movie.js
+index d61d822..e0a22e4 100644
+--- a/source/js/detail_movie.js
++++ b/source/js/detail_movie.js
+@@ -17,13 +17,13 @@ export default {
+         //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
+         alert(this.movie_store.id_cur_movie);
+         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
+-        fetch("https://mocki.io/v1/2c505bbd-7916-4536-a5c5-6180bb962742").then(res => res.json().then(data => {
++        fetch(url).then(res => res.json().then(data => {
+             
+             this.movie_store.current_movie = data;
+             this.actors = this.movie_store.current_movie.actorList;
+           }))
+ 
+-          fetch("https://mocki.io/v1/7d7f0352-07f0-4940-bde1-fdc09e32b1b8").then(res => res.json().then(data => {
++          fetch(BASE_URL + this.query2 + KEY_API + '/' + this.movie_store.id_cur_movie).then(res => res.json().then(data => {
+             console.log(data)
+             this.reviews = data.items;
+           }))
+diff --git a/source/js/latest_movie.js b/source/js/latest_movie.js
+index fee8b26..7c0d7cc 100644
+--- a/source/js/latest_movie.js
++++ b/source/js/latest_movie.js
+@@ -18,7 +18,7 @@ export default {
+     mounted() {
+ 
+          //BASE_URL + this.query + KEY_API
+-        fetch("https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7").then(res => res.json().then(data => {
++        fetch(BASE_URL + this.query + KEY_API).then(res => res.json().then(data => {
+             console.log(data.items);
+             this.movie_store.lastest_movies = data.items.slice(0,5);
+             this.active_item = this.movie_store.lastest_movies[0];
+diff --git a/source/js/popular_movie.js b/source/js/popular_movie.js
+index 7ba59bf..d4bbb44 100644
+--- a/source/js/popular_movie.js
++++ b/source/js/popular_movie.js
+@@ -34,7 +34,7 @@ export default {
+       var movies = [];
+         (async () => {
+            //BASE_URL + this.query + KEY_API
+-          const res = await fetch(`https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7`);
++          const res = await fetch(BASE_URL + this.query + KEY_API);
+           const data = await res.json();
+           movies = data.items;
+           const len = data.items.length;
+diff --git a/source/js/search_view.js b/source/js/search_view.js
+index 1735a49..e3638b9 100644
+--- a/source/js/search_view.js
++++ b/source/js/search_view.js
+@@ -11,7 +11,7 @@ export default {
+         }
+     },
+     mounted() {
+-        fetch("https://mocki.io/v1/08a5738b-c2c9-4574-bab7-4a75eee36aee").then(res => res.json().then(data => {
++        fetch(BASE_URL + this.query + KEY_API + '/' + encodeURI(this.movie_store.query)).then(res => res.json().then(data => {
+             console.log(data.results);
+             this.query_movies = data.results;
+           }))
+diff --git a/source/js/top_rating_movie.js b/source/js/top_rating_movie.js
+index df153da..51b5d1c 100644
+--- a/source/js/top_rating_movie.js
++++ b/source/js/top_rating_movie.js
+@@ -25,7 +25,7 @@ export default {
+       var num_slide = 5;
+       var movies = [];
+       //BASE_URL + this.query + KEY_API
+-      fetch(`https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7`).then(res => res.json().then(data => {
++      fetch(BASE_URL + this.query + KEY_API).then(res => res.json().then(data => {
+           const len = data.items.length;
+           if(len >= 30) num_slide = 10;
+           else{
+
+commit 0d3ed4a1fefeedd9a027678c18b325b5da37a2da
+Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+Date:   Sun Oct 23 20:35:07 2022 +0700
+
+    Fix error on passing data
+
+diff --git a/source/js/rating_movie.js b/source/js/rating_movie.js
+index a1cbf24..89e590c 100644
+--- a/source/js/rating_movie.js
++++ b/source/js/rating_movie.js
+@@ -10,7 +10,7 @@ export default{
+     },
+ 
+     methods:{
+-      transData(item){
++      trans(item){
+         this.$emit('hideMain','detail_movie');
+         this.movie_store.id_cur_movie = item.id;
+     },
+@@ -25,7 +25,7 @@ export default{
+     <div class="carousel-inner adjust">
+       <div class="carousel-item active">
+         <div class="cards-wrapper">
+-        <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="transData(item)">
++        <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="trans(item)">
+           <img :src="item.image" class="card-img-top" alt="...">
+           <div class="card-body disabled">
+               <p class="card-text">{{item.fullTitle}}</p>
+@@ -35,7 +35,7 @@ export default{
+       </div>
+       <div class="carousel-item" v-for="items in this.list">
+         <div class="cards-wrapper">
+-          <div class="card text-white bg-dark d-none d-md-block" v-for="item in items" @click="transData(item)">
++          <div class="card text-white bg-dark d-none d-md-block" v-for="item in items" @click="trans(item)">
+             <img :src="item.image" class="card-img-top" alt="...">
+             <div class="card-body disabled">
+               <p class="card-text">{{item.fullTitle}}</p>
+diff --git a/source/js/top_rating_movie.js b/source/js/top_rating_movie.js
+index 4e3b7b1..df153da 100644
+--- a/source/js/top_rating_movie.js
++++ b/source/js/top_rating_movie.js
+@@ -18,7 +18,7 @@ export default {
+     methods:{
+       hideMain(item){
+         this.$emit('update',item);
+-      },
++      }
+     },
+     mounted() {
+ 
+@@ -58,5 +58,5 @@ export default {
+     template: `<nav class="navbar navbar-expand-lg navbar-light bg-transparent rounded">
+     <a class="navbar-brand" style="font-weight:600">Top Rating</a>
+     </nav>
+-    <rating_movie :list='movie_store.topRating_movies' :nums='nums' :active_item='active_item' @transData='hideMain'/>`
++    <rating_movie :list='movie_store.topRating_movies' :nums='nums' :active_item='active_item' @hideMain='hideMain'/>`
+ }
+\ No newline at end of file
+
+commit ba8b3b1daaa3e3f6e78c91ac3baf2ffa18542439
+Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+Date:   Sun Oct 23 20:11:52 2022 +0700
+
+    Upload gitlog
+
+diff --git a/gitlog.txt b/gitlog.txt
+index 2953c3a..87b10ca 100644
+--- a/gitlog.txt
++++ b/gitlog.txt
+@@ -1,3 +1,2042 @@
++commit 34b6c73ee32f91b72f3951944d3313c735d6271f
++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++Date:   Sun Oct 23 20:11:22 2022 +0700
++
++    link an detail_movie page when clicking on an item
++
++diff --git a/source/index.html b/source/index.html
++index 9e06a65..a131fb6 100644
++--- a/source/index.html
+++++ b/source/index.html
++@@ -8,8 +8,6 @@
++   <link rel="stylesheet" href="style.css">
++   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
++     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
++-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
++-<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
++ 
++   <title>Movies Info</title>
++ </head>
++diff --git a/source/js/detail_actor.js b/source/js/detail_actor.js
++index 32afa5c..15b6bdd 100644
++--- a/source/js/detail_actor.js
+++++ b/source/js/detail_actor.js
++@@ -21,13 +21,13 @@ export default {
++             console.log(data);
++             this.movie_store.current_actor = data;
++           })) 
++-
++-          $(function(){
++-            $('#table_id').DataTable();
++-          })
++     },
++     
++     methods:{
+++        hideMain(data){
+++            this.$emit('update','detail_movie');
+++            this.movie_store.id_cur_movie = data
+++        }
++     },
++     template:
++     `
++@@ -59,7 +59,7 @@ export default {
++             </tr>
++         </thead>
++         <tbody>
++-            <tr v-for="actor in this.movie_store.current_actor.castMovies">
+++            <tr v-for="actor in this.movie_store.current_actor.castMovies" @click="hideMain(actor.id)">
++                 <th scope="col">{{actor.id}}</th>
++                 <td>{{actor.role}}</td>
++                 <td>{{actor.title}}</td>
++diff --git a/source/js/detail_movie.js b/source/js/detail_movie.js
++index 78c00f1..d61d822 100644
++--- a/source/js/detail_movie.js
+++++ b/source/js/detail_movie.js
++@@ -15,7 +15,7 @@ export default {
++         //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
++         //https://imdb-api.com/en/API/Title/k_jro07wuj/tt1877830/FullActor,Posters,Images,Ratings,
++         //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
++-
+++        alert(this.movie_store.id_cur_movie);
++         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
++         fetch("https://mocki.io/v1/2c505bbd-7916-4536-a5c5-6180bb962742").then(res => res.json().then(data => {
++             
++
++commit 19bfbe2463a76b10f521bc4bc9d4a7a78575fb01
++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++Date:   Sun Oct 23 20:01:54 2022 +0700
++
++    new actions
++
++diff --git a/source/index.html b/source/index.html
++index a131fb6..9e06a65 100644
++--- a/source/index.html
+++++ b/source/index.html
++@@ -8,6 +8,8 @@
++   <link rel="stylesheet" href="style.css">
++   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
++     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+++    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+++<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
++ 
++   <title>Movies Info</title>
++ </head>
++diff --git a/source/js/detail_actor.js b/source/js/detail_actor.js
++index afb1930..32afa5c 100644
++--- a/source/js/detail_actor.js
+++++ b/source/js/detail_actor.js
++@@ -8,6 +8,11 @@ export default {
++             movie_store,
++         }
++     },
+++
+++    methods:
+++    {
+++
+++    },
++     mounted() {
++         //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
++         const url = BASE_URL + this.query + KEY_API + '/' + this.movie_store.id_cur_actor;
++@@ -16,35 +21,9 @@ export default {
++             console.log(data);
++             this.movie_store.current_actor = data;
++           })) 
+++
++           $(function(){
++-            $('td', 'table').each(function(i) {
++-                $(this).text(i+1);
++-            });
++-            
++-            
++-            
++-            $('table.paginated').each(function() {
++-                var currentPage = 0;
++-                var numPerPage = 10;
++-                var $table = $(this);
++-                $table.bind('repaginate', function() {
++-                    $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
++-                });
++-                $table.trigger('repaginate');
++-                var numRows = $table.find('tbody tr').length;
++-                var numPages = Math.ceil(numRows / numPerPage);
++-                var $pager = $('<div class="pager"></div>');
++-                for (var page = 0; page < numPages; page++) {
++-                    $('<span class="page-number"></span>').text(page + 1).bind('click', {
++-                        newPage: page
++-                    }, function(event) {
++-                        currentPage = event.data['newPage'];
++-                        $table.trigger('repaginate');
++-                        $(this).addClass('active').siblings().removeClass('active');
++-                    }).appendTo($pager).addClass('clickable');
++-                }
++-                $pager.insertBefore($table).find('span.page-number:first').addClass('active');
++-            });
+++            $('#table_id').DataTable();
++           })
++     },
++     
++
++commit 336fb00136152c3d47d557b1c52c1ca1308295e2
++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++Date:   Sun Oct 23 19:16:12 2022 +0700
++
++    Create a new folder
++
++diff --git a/index.html b/source/index.html
++similarity index 100%
++rename from index.html
++rename to source/index.html
++diff --git a/js/body_pagination.js b/source/js/body_pagination.js
++similarity index 100%
++rename from js/body_pagination.js
++rename to source/js/body_pagination.js
++diff --git a/js/detail_actor.js b/source/js/detail_actor.js
++similarity index 100%
++rename from js/detail_actor.js
++rename to source/js/detail_actor.js
++diff --git a/js/detail_movie.js b/source/js/detail_movie.js
++similarity index 100%
++rename from js/detail_movie.js
++rename to source/js/detail_movie.js
++diff --git a/js/footer_nav.js b/source/js/footer_nav.js
++similarity index 100%
++rename from js/footer_nav.js
++rename to source/js/footer_nav.js
++diff --git a/js/header_nav.js b/source/js/header_nav.js
++similarity index 100%
++rename from js/header_nav.js
++rename to source/js/header_nav.js
++diff --git a/js/latest_movie.js b/source/js/latest_movie.js
++similarity index 100%
++rename from js/latest_movie.js
++rename to source/js/latest_movie.js
++diff --git a/js/main.js b/source/js/main.js
++similarity index 100%
++rename from js/main.js
++rename to source/js/main.js
++diff --git a/js/main_body.js b/source/js/main_body.js
++similarity index 100%
++rename from js/main_body.js
++rename to source/js/main_body.js
++diff --git a/js/movie_store.js b/source/js/movie_store.js
++similarity index 100%
++rename from js/movie_store.js
++rename to source/js/movie_store.js
++diff --git a/js/popular_movie.js b/source/js/popular_movie.js
++similarity index 100%
++rename from js/popular_movie.js
++rename to source/js/popular_movie.js
++diff --git a/js/rating_movie.js b/source/js/rating_movie.js
++similarity index 100%
++rename from js/rating_movie.js
++rename to source/js/rating_movie.js
++diff --git a/js/search_view.js b/source/js/search_view.js
++similarity index 100%
++rename from js/search_view.js
++rename to source/js/search_view.js
++diff --git a/js/super_header.js b/source/js/super_header.js
++similarity index 100%
++rename from js/super_header.js
++rename to source/js/super_header.js
++diff --git a/js/switch.js b/source/js/switch.js
++similarity index 100%
++rename from js/switch.js
++rename to source/js/switch.js
++diff --git a/js/top_rating_movie.js b/source/js/top_rating_movie.js
++similarity index 100%
++rename from js/top_rating_movie.js
++rename to source/js/top_rating_movie.js
++diff --git a/style.css b/source/style.css
++similarity index 100%
++rename from style.css
++rename to source/style.css
++
++commit e6e0b3fcd5536d15a205d5cf70f197165b092a2c
++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++Date:   Sun Oct 23 19:10:47 2022 +0700
++
++    Update gitlog
++
++diff --git a/gitlog.txt b/gitlog.txt
++index f93ff84..2953c3a 100644
++--- a/gitlog.txt
+++++ b/gitlog.txt
++@@ -1,3 +1,1814 @@
+++commit 75342246e5ca706fab6b9fd1b33e1c73ae8efd92
+++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+++Date:   Sun Oct 23 19:10:24 2022 +0700
+++
+++    Adjust some features
+++
+++diff --git a/index.html b/index.html
+++index 43bf981..a131fb6 100644
+++--- a/index.html
++++++ b/index.html
+++@@ -8,7 +8,7 @@
+++   <link rel="stylesheet" href="style.css">
+++   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+++     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+++-    
++++
+++   <title>Movies Info</title>
+++ </head>
+++ 
+++@@ -28,7 +28,7 @@
+++   <script type="module">
+++     import { createApp } from 'vue'
+++     import MyComponent from './js/main.js'
+++-    
++++
+++     createApp(MyComponent).mount('.bootstrap')
+++   </script>
+++   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+++@@ -38,17 +38,12 @@
+++     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+++     crossorigin="anonymous"></script>
+++   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+++-  <link
+++-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+++-      rel="stylesheet"
+++-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+++-      crossorigin="anonymous"
+++-    />
+++-    
++++  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
++++    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
++++
+++   <script>
+++     const KEY_API = '/k_jro07wuj';
+++     const BASE_URL = 'https://imdb-api.com/en/API/';
+++-    
+++ 
+++   </script>
+++ </body>
+++diff --git a/js/detail_actor.js b/js/detail_actor.js
+++index 635d253..afb1930 100644
+++--- a/js/detail_actor.js
++++++ b/js/detail_actor.js
+++@@ -15,9 +15,39 @@ export default {
+++         fetch("https://mocki.io/v1/7a4943b7-6557-4339-8ae4-6656ed3459e2").then(res => res.json().then(data => {
+++             console.log(data);
+++             this.movie_store.current_actor = data;
+++-          }))          
+++-          
++++          })) 
++++          $(function(){
++++            $('td', 'table').each(function(i) {
++++                $(this).text(i+1);
++++            });
++++            
++++            
++++            
++++            $('table.paginated').each(function() {
++++                var currentPage = 0;
++++                var numPerPage = 10;
++++                var $table = $(this);
++++                $table.bind('repaginate', function() {
++++                    $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
++++                });
++++                $table.trigger('repaginate');
++++                var numRows = $table.find('tbody tr').length;
++++                var numPages = Math.ceil(numRows / numPerPage);
++++                var $pager = $('<div class="pager"></div>');
++++                for (var page = 0; page < numPages; page++) {
++++                    $('<span class="page-number"></span>').text(page + 1).bind('click', {
++++                        newPage: page
++++                    }, function(event) {
++++                        currentPage = event.data['newPage'];
++++                        $table.trigger('repaginate');
++++                        $(this).addClass('active').siblings().removeClass('active');
++++                    }).appendTo($pager).addClass('clickable');
++++                }
++++                $pager.insertBefore($table).find('span.page-number:first').addClass('active');
++++            });
++++          })
+++     },
++++    
+++     methods:{
+++     },
+++     template:
+++@@ -37,6 +67,8 @@ export default {
+++             </div>
+++         </div>
+++     </div>
++++
++++  </div>
+++     <table class="table table-striped">
+++         <thead class="thead-dark">
+++             <tr> 
+++@@ -56,5 +88,6 @@ export default {
+++                 <td>{{actor.description}}</td>
+++             </tr>
+++         </tbody>
+++-  </table>`
++++  </table>
++++</div>`
+++ }
+++\ No newline at end of file
+++diff --git a/js/detail_movie.js b/js/detail_movie.js
+++index 5736159..78c00f1 100644
+++--- a/js/detail_movie.js
++++++ b/js/detail_movie.js
+++@@ -27,8 +27,6 @@ export default {
+++             console.log(data)
+++             this.reviews = data.items;
+++           }))
+++-
+++-          
+++           
+++     },
+++     methods:{
+++diff --git a/js/popular_movie.js b/js/popular_movie.js
+++index 7d880b1..7ba59bf 100644
+++--- a/js/popular_movie.js
++++++ b/js/popular_movie.js
+++@@ -63,7 +63,7 @@ export default {
+++             <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
+++             <li data-target="#carouselExampleControls" :data-slide-to="num+1" v-for="num in this.nums"></li>
+++         </ol>
+++-    <div class="carousel-inner">
++++    <div class="carousel-inner adjust">
+++       <div class="carousel-item active">
+++         <div class="cards-wrapper">
+++         <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="hideMain(item)">
+++diff --git a/js/rating_movie.js b/js/rating_movie.js
+++index 43f39f7..a1cbf24 100644
+++--- a/js/rating_movie.js
++++++ b/js/rating_movie.js
+++@@ -22,7 +22,7 @@ export default{
+++             <li data-target="#newcarouselExampleControls" data-slide-to="0" class="active"></li>
+++             <li data-target="#newcarouselExampleControls" :data-slide-to="num+1" v-for="num in this.nums"></li>
+++         </ol>
+++-    <div class="carousel-inner">
++++    <div class="carousel-inner adjust">
+++       <div class="carousel-item active">
+++         <div class="cards-wrapper">
+++         <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="transData(item)">
+++diff --git a/style.css b/style.css
+++index 78588c3..6e69fd3 100644
+++--- a/style.css
++++++ b/style.css
+++@@ -109,7 +109,7 @@ body{
+++     padding: 1em;
+++   }
+++ 
+++-  .card:hover
++++  .adjust .card:hover
+++   {
+++     transform: scale(1.8);
+++     min-height: 750px !important;
+++@@ -296,6 +296,4 @@ body{
+++     margin: -8px 5px 0 0;
+++   }
+++ }
+++-body {
+++-  background: #212121;
+++-}
++++
+++
+++commit 2ef78345acda9c0d66a920590ba69f7b45fa1105
+++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+++Date:   Sun Oct 23 17:06:57 2022 +0700
+++
+++    Remove body_main.js, just use main_body.js
+++
+++diff --git a/js/body_main.js b/js/body_main.js
+++deleted file mode 100644
+++index d82111a..0000000
+++--- a/js/body_main.js
++++++ /dev/null
+++@@ -1,41 +0,0 @@
+++-import person_store from "./person_store.js"
+++-
+++-export default {
+++-    data() {
+++-        return {
+++-          person_store,
+++-        }
+++-    },
+++-
+++-    methods:{
+++-      changeComponent(p){
+++-        this.person_store.current_component = 'detail_display'
+++-        this.person_store.current_person = p
+++-        $('.pagination-nav').hide()
+++-      }
+++-    },
+++-    template: `<table class="table table-striped">
+++-    <thead class="thead-dark">
+++-      <tr> 
+++-        <th scope="col">#</th>
+++-        <th scope="col">First name</th>
+++-        <th scope="col">Last name</th>
+++-        <th scope="col">Email</th>
+++-        <th scope="col">Avatar</th>
+++-      </tr>
+++-    </thead>
+++-    <tbody>
+++-    <tr v-for="p in person_store.persons" @click="changeComponent(p)">
+++-      <th scope="col">{{p.id}}</th>
+++-      <td>{{p.first_name}}</td>
+++-      <td>{{p.last_name}}</td>
+++-      <td>{{p.email}}</td>
+++-      <td>
+++-        <img :src="p.avatar" :alt="p.id"/>
+++-      </td>
+++-    </tr>
+++-    </tbody>
+++-  </table>
+++-  
+++-  `
+++-}
+++\ No newline at end of file
+++
+++commit 70582565bbad336707cbacaa384e5bc4b3f38d44
+++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+++Date:   Sun Oct 23 17:05:31 2022 +0700
+++
+++    Upload temporarily "diem.txt" & Update gitlog
+++
+++diff --git a/diem.txt b/diem.txt
+++new file mode 100644
+++index 0000000..e3bc2d7
+++--- /dev/null
++++++ b/diem.txt
+++@@ -0,0 +1,25 @@
++++✓ 1 điểm: Giao diện cơ bản với bố cục và các thành phần yêu cầu (chưa có
++++dữ liệu movie, phải điền đủ các thông tin yêu cầu.
++++✓ 1 điểm: thực hiện được chế độ Dark mode.
++++✓ 1 điểm: Danh sách 5 Movie chiếu rạp mới nhất hiển thị như yêu cầu với các
++++thông tin cơ bản: poster, title, rated, length,...
++++✓ 1 điểm: Danh sách 15~30 Movie phổ biến nhất hiển thị như yêu cầu.
++++✓ 1 điểm: hiệu ứng highlight khi hover Movie như yêu cầu (có thêm một số
++++thông tin).
++++✓ 1 điểm: Danh sách 15~30 Movie thứ hạng cao nhất hiển thị như yêu cầu
++++mà KHÔNG clone code.
++++✓ 0.5 điểm: liên kết để chuyển sang xem chi tiết Movie ở bất kỳ Movie nào trên
++++bất kỳ danh sách nào.
++++✓ 1 điểm: Thực hiện tìm kiếm Movie theo tên và hiển thị theo dạng CardView
++++với các thông tin cơ bản: poster, title, rated, length,...
++++✓ 0 điểm: Thực hiện tìm kiếm Movie theo Diễn viên
++++✓ 1 điểm: Xem chi tiết Movie, cần hiển thị được hình ảnh, tiêu đề, năm sản
++++xuất, đạo diễn, tóm tắt, thông tin diễn viên, thể loại.
++++✓ 1 điểm: Xem thông tin chi tiết diễn viên (nhấn liên kết từ tên diễn viên trong
++++xem chi tiết Movie) cần hiển thị được hình ảnh, tên diễn viên, tiểu sử. Cần hiển thị thêm được danh sách Movie diễn viên có tham gia (dạng danh sách có nhiều thông tin).
++++✓ 1 điểm: Trong phần chi tiết Movie hiển thị được reviews cho Movie.
++++✓ 1 điểm: thực hiên được chứ năng về Home và có hiệu ứng Loading.
++++✓ 0 điểm: có phân trang ở các danh sách: kết quả tìm kiếm, danh sách phim
++++của diễn viên.
++++
++++=> Điểm tự đánh giá: 11.5đ
+++\ No newline at end of file
+++diff --git a/gitlog.txt b/gitlog.txt
+++index 21ea9ff..f93ff84 100644
+++--- a/gitlog.txt
++++++ b/gitlog.txt
+++@@ -1,3 +1,1538 @@
++++commit 2d260619db7ef7c4f978ea9c6ab12d483d67dfe4
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 17:00:20 2022 +0700
++++
++++    Test debug
++++
++++diff --git a/js/detail_actor.js b/js/detail_actor.js
++++index 8955ba6..635d253 100644
++++--- a/js/detail_actor.js
+++++++ b/js/detail_actor.js
++++@@ -11,6 +11,7 @@ export default {
++++     mounted() {
++++         //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
++++         const url = BASE_URL + this.query + KEY_API + '/' + this.movie_store.id_cur_actor;
+++++        console.log(url);
++++         fetch("https://mocki.io/v1/7a4943b7-6557-4339-8ae4-6656ed3459e2").then(res => res.json().then(data => {
++++             console.log(data);
++++             this.movie_store.current_actor = data;
++++
++++commit dc4e28a673b04a8b6be4cf555d36597956635e00
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 16:53:28 2022 +0700
++++
++++    Add the list of cast movies
++++
++++diff --git a/.DS_Store b/.DS_Store
++++new file mode 100644
++++index 0000000..23f05c5
++++Binary files /dev/null and b/.DS_Store differ
++++diff --git a/js/detail_actor.js b/js/detail_actor.js
++++index 96bf56b..8955ba6 100644
++++--- a/js/detail_actor.js
+++++++ b/js/detail_actor.js
++++@@ -35,5 +35,25 @@ export default {
++++                 </div>
++++             </div>
++++         </div>
++++-    </div>`
+++++    </div>
+++++    <table class="table table-striped">
+++++        <thead class="thead-dark">
+++++            <tr> 
+++++                <th scope="col">ID</th>
+++++                <th scope="col">Role</th>
+++++                <th scope="col">Title</th>
+++++                <th scope="col">Year</th>
+++++                <th scope="col">Description</th>
+++++            </tr>
+++++        </thead>
+++++        <tbody>
+++++            <tr v-for="actor in this.movie_store.current_actor.castMovies">
+++++                <th scope="col">{{actor.id}}</th>
+++++                <td>{{actor.role}}</td>
+++++                <td>{{actor.title}}</td>
+++++                <td>{{actor.year}}</td>
+++++                <td>{{actor.description}}</td>
+++++            </tr>
+++++        </tbody>
+++++  </table>`
++++ }
++++\ No newline at end of file
++++
++++commit 34d486d5e4f773b4aa03fd5780600fafe638062d
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 16:27:36 2022 +0700
++++
++++    update movie store
++++
++++diff --git a/js/movie_store.js b/js/movie_store.js
++++index 0610013..833e1cb 100644
++++--- a/js/movie_store.js
+++++++ b/js/movie_store.js
++++@@ -6,5 +6,7 @@ export default reactive({
++++     topRating_movies: [],
++++     current_movie: [],
++++     id_cur_movie: "",
+++++    id_cur_actor: "",
+++++    current_actor: [],
++++     query: ""
++++ })
++++
++++commit d1caf3d0528a1f78f7bda9505c441a8948e44b69
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 16:27:16 2022 +0700
++++
++++    Add some adjustment for detail movie & actor
++++
++++diff --git a/js/main.js b/js/main.js
++++index ee445ba..7c4743b 100644
++++--- a/js/main.js
+++++++ b/js/main.js
++++@@ -4,6 +4,8 @@ import footer_nav from "./footer_nav.js"
++++ import main_body from "./main_body.js"
++++ import search_view from "./search_view.js"
++++ import detail_movie from "./detail_movie.js"
+++++import detail_actor from "./detail_actor.js"
+++++
++++ 
++++ export default {
++++     data() {
++++@@ -17,7 +19,9 @@ export default {
++++         footer_nav,
++++         main_body,
++++         search_view,
++++-        detail_movie
+++++        detail_movie,
+++++        detail_actor
+++++
++++     },
++++     methods:{
++++         updateSection(section){
++++
++++commit 84ac254ace6988d304b9729c4d3ebdb035c835ad
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 16:26:37 2022 +0700
++++
++++    Update some feature in actor list display
++++
++++diff --git a/js/detail_actor.js b/js/detail_actor.js
++++new file mode 100644
++++index 0000000..96bf56b
++++--- /dev/null
+++++++ b/js/detail_actor.js
++++@@ -0,0 +1,39 @@
+++++
+++++import movie_store from "./movie_store.js";
+++++
+++++export default {
+++++    data() {
+++++        return {
+++++            query: "Name",
+++++            movie_store,
+++++        }
+++++    },
+++++    mounted() {
+++++        //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
+++++        const url = BASE_URL + this.query + KEY_API + '/' + this.movie_store.id_cur_actor;
+++++        fetch("https://mocki.io/v1/7a4943b7-6557-4339-8ae4-6656ed3459e2").then(res => res.json().then(data => {
+++++            console.log(data);
+++++            this.movie_store.current_actor = data;
+++++          }))          
+++++          
+++++    },
+++++    methods:{
+++++    },
+++++    template:
+++++    `
+++++    <div class="movie-container">
+++++        <div class="card mb-3" style="max-width: 1100px;">
+++++            <div class="row g-0">
+++++                <div class="col-md-4">
+++++                    <img :src="this.movie_store.current_actor.image" class="img-fluid rounded-start img-movie" :alt="this.movie_store.current_actor.id">
+++++                </div>
+++++                <div class="col-md-8">
+++++                    <div class="card-body text-dark">
+++++                        <h2 class="card-title">{{this.movie_store.current_actor.name}}</h2>
+++++                        <p class="card-text">{{this.movie_store.current_actor.summary}}</p>
+++++                    </div>
+++++                </div>
+++++            </div>
+++++        </div>
+++++    </div>`
+++++}
++++\ No newline at end of file
++++
++++commit bedc05376fe1decce7d6c47dbefd17cca4422205
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 16:26:16 2022 +0700
++++
++++    Add a new detailed movie file
++++
++++diff --git a/js/detail_movie.js b/js/detail_movie.js
++++index 45e813a..5736159 100644
++++--- a/js/detail_movie.js
+++++++ b/js/detail_movie.js
++++@@ -17,11 +17,10 @@ export default {
++++         //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
++++ 
++++         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
++++-        console.log(url)
++++         fetch("https://mocki.io/v1/2c505bbd-7916-4536-a5c5-6180bb962742").then(res => res.json().then(data => {
++++             
++++             this.movie_store.current_movie = data;
++++-            this.actors = this.movie_store.current_movie.actorList.map((obj) => obj.name)
+++++            this.actors = this.movie_store.current_movie.actorList;
++++           }))
++++ 
++++           fetch("https://mocki.io/v1/7d7f0352-07f0-4940-bde1-fdc09e32b1b8").then(res => res.json().then(data => {
++++@@ -33,7 +32,10 @@ export default {
++++           
++++     },
++++     methods:{
++++-
+++++        actorID(item){
+++++            this.$emit('update','detail_actor');
+++++            this.movie_store.id_cur_actor = item;
+++++        }
++++     },
++++     template:
++++     `<div class="movie-container">
++++@@ -48,7 +50,7 @@ export default {
++++             <p class="card-text">Year: {{this.movie_store.current_movie.year}}</p>
++++             <p class="card-text">Directors: {{this.movie_store.current_movie.directors}}</p>
++++             <p class="card-text">Genres: {{this.movie_store.current_movie.genres}}</p>
++++-            <p class="card-text img-movie">Actors: <span class="actor" v-for="actor in this.actors">{{actor}}, <span></p>
+++++            <p class="card-text img-movie">Actors: <span class="actor" v-for="actor in this.actors" @click="actorID(actor.id)">{{actor.name}}, </span></p>
++++             <p class="card-text"><small class="text-muted">Summary: {{this.movie_store.current_movie.plot}}</small></p>
++++             </div>
++++         </div>
++++
++++commit ba3cddbaf6a014005a2d7983f611c0a65465755d
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 13:55:11 2022 +0700
++++
++++    Adjust style and make a apperance of actors
++++
++++diff --git a/js/detail_movie.js b/js/detail_movie.js
++++index ca90294..45e813a 100644
++++--- a/js/detail_movie.js
+++++++ b/js/detail_movie.js
++++@@ -7,6 +7,7 @@ export default {
++++             query1: "Title",
++++             query2: "Reviews",
++++             movie_store,
+++++            actors: [],
++++             reviews: []
++++         }
++++     },
++++@@ -17,15 +18,19 @@ export default {
++++ 
++++         const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
++++         console.log(url)
++++-        fetch(url).then(res => res.json().then(data => {
+++++        fetch("https://mocki.io/v1/2c505bbd-7916-4536-a5c5-6180bb962742").then(res => res.json().then(data => {
++++             
++++             this.movie_store.current_movie = data;
+++++            this.actors = this.movie_store.current_movie.actorList.map((obj) => obj.name)
++++           }))
++++ 
++++-          fetch(BASE_URL + this.query2 + KEY_API + '/' + this.movie_store.id_cur_movie).then(res => res.json().then(data => {
+++++          fetch("https://mocki.io/v1/7d7f0352-07f0-4940-bde1-fdc09e32b1b8").then(res => res.json().then(data => {
++++             console.log(data)
++++             this.reviews = data.items;
++++           }))
+++++
+++++          
+++++          
++++     },
++++     methods:{
++++ 
++++@@ -43,6 +48,7 @@ export default {
++++             <p class="card-text">Year: {{this.movie_store.current_movie.year}}</p>
++++             <p class="card-text">Directors: {{this.movie_store.current_movie.directors}}</p>
++++             <p class="card-text">Genres: {{this.movie_store.current_movie.genres}}</p>
+++++            <p class="card-text img-movie">Actors: <span class="actor" v-for="actor in this.actors">{{actor}}, <span></p>
++++             <p class="card-text"><small class="text-muted">Summary: {{this.movie_store.current_movie.plot}}</small></p>
++++             </div>
++++         </div>
++++diff --git a/style.css b/style.css
++++index d0b246c..78588c3 100644
++++--- a/style.css
+++++++ b/style.css
++++@@ -206,10 +206,19 @@ body{
++++   align-items: center;
++++ }
++++ 
++++-.img-movie{
+++++.actor-list div{
++++   display: flex;
++++-  justify-content: center;
++++-  align-items: center;
+++++  flex-wrap: wrap;
+++++  cursor: pointer;
+++++}
+++++
+++++.img-movie{
+++++ text-align: justify;
+++++}
+++++
+++++.actor:hover{
+++++  cursor: pointer;
+++++  font-size: 1.2rem;
++++ }
++++ 
++++ .review{
++++
++++commit 3e95f7d0a3d9b0601e5c3d209d19f69c10f3414f
++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++Date:   Sun Oct 23 12:54:56 2022 +0700
++++
++++    Upload gitlog.txt
++++
++++diff --git a/gitlog.txt b/gitlog.txt
++++index 183f8f8..21ea9ff 100644
++++--- a/gitlog.txt
+++++++ b/gitlog.txt
++++@@ -1,3 +1,1237 @@
+++++commit 630bcc5d43a409cfab83ff2e152cabd9e95a43be
+++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+++++Date:   Sun Oct 23 12:53:43 2022 +0700
+++++
+++++    Upload main.js
+++++
+++++diff --git a/js/detail_movie.js b/js/detail_movie.js
+++++new file mode 100644
+++++index 0000000..ca90294
+++++--- /dev/null
++++++++ b/js/detail_movie.js
+++++@@ -0,0 +1,64 @@
++++++
++++++import movie_store from "./movie_store.js";
++++++
++++++export default {
++++++    data() {
++++++        return {
++++++            query1: "Title",
++++++            query2: "Reviews",
++++++            movie_store,
++++++            reviews: []
++++++        }
++++++    },
++++++    mounted() {
++++++        //https://imdb-api.com/en/API/Name/k_jro07wuj/nm0000154
++++++        //https://imdb-api.com/en/API/Title/k_jro07wuj/tt1877830/FullActor,Posters,Images,Ratings,
++++++        //https://imdb-api.com/en/API/Reviews/k_jro07wuj/tt1375666
++++++
++++++        const url = BASE_URL + this.query1 + KEY_API + '/' + this.movie_store.id_cur_movie + "/FullActor,Posters,Images,Ratings,";
++++++        console.log(url)
++++++        fetch(url).then(res => res.json().then(data => {
++++++            
++++++            this.movie_store.current_movie = data;
++++++          }))
++++++
++++++          fetch(BASE_URL + this.query2 + KEY_API + '/' + this.movie_store.id_cur_movie).then(res => res.json().then(data => {
++++++            console.log(data)
++++++            this.reviews = data.items;
++++++          }))
++++++    },
++++++    methods:{
++++++
++++++    },
++++++    template:
++++++    `<div class="movie-container">
++++++    <div class="card mb-3" style="max-width: 1100px;">
++++++    <div class="row g-0">
++++++      <div class="col-md-4">
++++++        <img :src="this.movie_store.current_movie.image" class="img-fluid rounded-start img-movie" :alt="this.movie_store.current_movie.id">
++++++      </div>
++++++        <div class="col-md-8">
++++++            <div class="card-body text-dark">
++++++            <h5 class="card-title">{{this.movie_store.current_movie.fullTitle}}</h5>
++++++            <p class="card-text">Year: {{this.movie_store.current_movie.year}}</p>
++++++            <p class="card-text">Directors: {{this.movie_store.current_movie.directors}}</p>
++++++            <p class="card-text">Genres: {{this.movie_store.current_movie.genres}}</p>
++++++            <p class="card-text"><small class="text-muted">Summary: {{this.movie_store.current_movie.plot}}</small></p>
++++++            </div>
++++++        </div>
++++++    </div>
++++++    </div>
++++++    </div>
++++++    <div class="row row-cols-1 review-title">Reviews</div>
++++++    <div class="row row-cols-1 row-cols-md-3 g-4">
++++++    <div class="col" v-for="item in this.reviews">
++++++        <div class="card review">
++++++        <div class="card-body text-dark">
++++++            <h3>{{item.username}}</h3>
++++++            <h5 class="card-title"><i>{{item.title}}</i></h5>
++++++            <p class="card-text">{{item.content}}</p>
++++++        </div>
++++++        </div>
++++++    </div>
++++++    </div>`
++++++}
+++++\ No newline at end of file
+++++diff --git a/js/footer_nav.js b/js/footer_nav.js
+++++new file mode 100644
+++++index 0000000..0cd1717
+++++--- /dev/null
++++++++ b/js/footer_nav.js
+++++@@ -0,0 +1,13 @@
++++++export default {
++++++    data() {
++++++        return {
++++++
++++++        }
++++++    },
++++++    methods: {
++++++
++++++    },
++++++    template: `<nav class="navbar navbar-light bg-light rounded footer">
++++++        <a class="navbar-brand sub-title " href="#">Copyright &copy Ngo Nguyen Quang Tu</a> 
++++++        </nav>`
++++++}
+++++\ No newline at end of file
+++++diff --git a/js/latest_movie.js b/js/latest_movie.js
+++++new file mode 100644
+++++index 0000000..fee8b26
+++++--- /dev/null
++++++++ b/js/latest_movie.js
+++++@@ -0,0 +1,57 @@
++++++import movie_store from "./movie_store.js";
++++++
++++++export default {
++++++    data() {
++++++        return {
++++++            query: "InTheaters",
++++++            movie_store,
++++++            active_item: {},
++++++            nums: [1,2,3,4]
++++++        }
++++++    },
++++++    methods:{
++++++         hideMain(item){
++++++            this.$emit('update','detail_movie');
++++++            this.movie_store.id_cur_movie = item.id;
++++++        },
++++++    },
++++++    mounted() {
++++++
++++++         //BASE_URL + this.query + KEY_API
++++++        fetch("https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7").then(res => res.json().then(data => {
++++++            console.log(data.items);
++++++            this.movie_store.lastest_movies = data.items.slice(0,5);
++++++            this.active_item = this.movie_store.lastest_movies[0];
++++++            this.movie_store.lastest_movies.splice(0,1);
++++++          }))
++++++    },
++++++    template: `
++++++    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
++++++        <ol class="carousel-indicators latest-indicator">
++++++            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
++++++            <li data-target="#carouselExampleIndicators" :data-slide-to="num" v-for="num in nums"></li>
++++++        </ol>
++++++        <div class="carousel-inner first-carousel">
++++++            <div class="carousel-item active" @click="hideMain(this.active_item)">
++++++                <img class="d-block w-50" :src="this.active_item.image"/>
++++++                <div class="carousel-caption d-none d-md-block">
++++++                    <h3>{{this.active_item.fullTitle}}</h3>
++++++                </div>
++++++            </div>
++++++            <div class="carousel-item" v-for="item in this.movie_store.lastest_movies" @click="hideMain(item)">
++++++                <img class="d-block w-50" :src="item.image">
++++++                <div class="carousel-caption d-none d-md-block">
++++++                    <h3>{{item.fullTitle}}</h3>
++++++                </div>
++++++            </div>
++++++        </div>
++++++        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
++++++            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
++++++            <span class="sr-only">Previous</span>
++++++        </a>
++++++        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
++++++            <span class="carousel-control-next-icon" aria-hidden="true"></span>
++++++            <span class="sr-only">Next</span>
++++++        </a>
++++++    </div>`
++++++}
+++++\ No newline at end of file
+++++diff --git a/js/main.js b/js/main.js
+++++new file mode 100644
+++++index 0000000..ee445ba
+++++--- /dev/null
++++++++ b/js/main.js
+++++@@ -0,0 +1,33 @@
++++++import super_header from "./super_header.js"
++++++import header_nav from "./header_nav.js"
++++++import footer_nav from "./footer_nav.js"
++++++import main_body from "./main_body.js"
++++++import search_view from "./search_view.js"
++++++import detail_movie from "./detail_movie.js"
++++++
++++++export default {
++++++    data() {
++++++        return {
++++++            currentSection: 'main_body'
++++++        }
++++++    },
++++++    components: {
++++++        super_header,
++++++        header_nav,
++++++        footer_nav,
++++++        main_body,
++++++        search_view,
++++++        detail_movie
++++++    },
++++++    methods:{
++++++        updateSection(section){
++++++            this.currentSection = section;
++++++        }
++++++    },
++++++
++++++    template:
++++++    `<super_header/>
++++++    <header_nav @loadSearch="updateSection"/>
++++++    <component :is="currentSection" @update="updateSection"></component>
++++++    <footer_nav/>`
++++++}
+++++\ No newline at end of file
+++++diff --git a/js/movie_store.js b/js/movie_store.js
+++++new file mode 100644
+++++index 0000000..0610013
+++++--- /dev/null
++++++++ b/js/movie_store.js
+++++@@ -0,0 +1,10 @@
++++++import {reactive} from 'vue'  
++++++
++++++export default reactive({
++++++    latest_movies: [],
++++++    popular_movies: [],
++++++    topRating_movies: [],
++++++    current_movie: [],
++++++    id_cur_movie: "",
++++++    query: ""
++++++})
+++++diff --git a/js/rating_movie.js b/js/rating_movie.js
+++++new file mode 100644
+++++index 0000000..43f39f7
+++++--- /dev/null
++++++++ b/js/rating_movie.js
+++++@@ -0,0 +1,56 @@
++++++
++++++import movie_store from "./movie_store.js";
++++++
++++++export default{
++++++    props:['list','nums','active_item'],
++++++    data(){
++++++      return{
++++++        movie_store
++++++      }
++++++    },
++++++
++++++    methods:{
++++++      transData(item){
++++++        this.$emit('hideMain','detail_movie');
++++++        this.movie_store.id_cur_movie = item.id;
++++++    },
++++++    },
++++++
++++++    template: `
++++++    <div id="newcarouselExampleControls" class="carousel slide" data-ride="carousel">
++++++    <ol class="carousel-indicators indicator">
++++++            <li data-target="#newcarouselExampleControls" data-slide-to="0" class="active"></li>
++++++            <li data-target="#newcarouselExampleControls" :data-slide-to="num+1" v-for="num in this.nums"></li>
++++++        </ol>
++++++    <div class="carousel-inner">
++++++      <div class="carousel-item active">
++++++        <div class="cards-wrapper">
++++++        <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="transData(item)">
++++++          <img :src="item.image" class="card-img-top" alt="...">
++++++          <div class="card-body disabled">
++++++              <p class="card-text">{{item.fullTitle}}</p>
++++++            </div>
++++++        </div>
++++++      </div>
++++++      </div>
++++++      <div class="carousel-item" v-for="items in this.list">
++++++        <div class="cards-wrapper">
++++++          <div class="card text-white bg-dark d-none d-md-block" v-for="item in items" @click="transData(item)">
++++++            <img :src="item.image" class="card-img-top" alt="...">
++++++            <div class="card-body disabled">
++++++              <p class="card-text">{{item.fullTitle}}</p>
++++++            </div>
++++++          </div>
++++++        </div>
++++++      </div>
++++++    </div>
++++++    <a class="carousel-control-prev prev" href="#newcarouselExampleControls" role="button" data-slide="prev">
++++++      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
++++++      <span class="sr-only">Previous</span>
++++++    </a>
++++++    <a class="carousel-control-next next" href="#newcarouselExampleControls" role="button" data-slide="next">
++++++      <span class="carousel-control-next-icon" aria-hidden="true"></span>
++++++      <span class="sr-only">Next</span>
++++++    </a>
++++++  </div>`
++++++}
+++++\ No newline at end of file
+++++diff --git a/js/search_view.js b/js/search_view.js
+++++new file mode 100644
+++++index 0000000..1735a49
+++++--- /dev/null
++++++++ b/js/search_view.js
+++++@@ -0,0 +1,40 @@
++++++
++++++import movie_store from "./movie_store.js";
++++++import { nextTick } from 'vue'
++++++
++++++export default {
++++++    data() {
++++++        return {
++++++            query: "SearchMovie",
++++++            movie_store,
++++++            query_movies: [],
++++++        }
++++++    },
++++++    mounted() {
++++++        fetch("https://mocki.io/v1/08a5738b-c2c9-4574-bab7-4a75eee36aee").then(res => res.json().then(data => {
++++++            console.log(data.results);
++++++            this.query_movies = data.results;
++++++          }))
++++++    },
++++++    methods:{
++++++        async hideMain(item){
++++++            this.$emit('update','detail_movie');
++++++            this.movie_store.id_cur_movie = item.id;
++++++            await nextTick();
++++++        },
++++++    },
++++++    template:
++++++    `<div class="search-container">
++++++        <div class="row row-cols-1 row-cols-md-3 g-4">
++++++            <div class="col" v-for="item in this.query_movies">
++++++            <div class="card h-100 text-dark" @click="hideMain(item)">
++++++                <img :src="item.image" class="card-img-top" :alt="item.id">
++++++                <div class="card-body text-center">
++++++                <h5 class="card-title">{{item.title}}</h5>
++++++                <p class="card-text">{{item.description}}</p>
++++++                </div>
++++++            </div>
++++++        </div>
++++++    </div>
++++++    </div>`
++++++}
+++++\ No newline at end of file
+++++diff --git a/js/switch.js b/js/switch.js
+++++new file mode 100644
+++++index 0000000..6445e23
+++++--- /dev/null
++++++++ b/js/switch.js
+++++@@ -0,0 +1,104 @@
++++++/**
++++++ *  Light Switch @version v0.1.4
++++++ */
++++++  
++++++ (function () {
++++++    let lightSwitch = document.getElementById('lightSwitch');
++++++    if (!lightSwitch) {
++++++      return;
++++++    }
++++++  
++++++    /**
++++++     * @function darkmode
++++++     * @summary: changes the theme to 'dark mode' and save settings to local stroage.
++++++     * Basically, replaces/toggles every CSS class that has '-light' class with '-dark'
++++++     */
++++++    function darkMode() {
++++++
++++++      document.querySelectorAll('.bg-light').forEach((element) => {
++++++        element.className = element.className.replace(/-light/g, '-dark');
++++++      });
++++++    
++++++      document.body.classList.remove('background-light')
++++++      document.body.classList.add('background-dark');
++++++  
++++++      if (document.body.classList.contains('text-dark')) {
++++++        document.body.classList.replace('text-dark', 'text-light');
++++++      } else {
++++++        document.body.classList.add('text-light');
++++++      }
++++++  
++++++      // set light switch input to true
++++++      if (!lightSwitch.checked) {
++++++        lightSwitch.checked = true;
++++++      }
++++++      localStorage.setItem('lightSwitch', 'dark');
++++++    }
++++++  
++++++    /**
++++++     * @function lightmode
++++++     * @summary: changes the theme to 'light mode' and save settings to local stroage.
++++++     */
++++++    function lightMode() {
++++++      document.querySelectorAll('.bg-dark').forEach((element) => {
++++++        element.className = element.className.replace(/-dark/g, '-light');
++++++      });
++++++  
++++++  
++++++      if (document.body.classList.contains('text-light')) {
++++++        document.body.classList.replace('text-light', 'text-dark');
++++++      } else {
++++++        document.body.classList.add('text-dark');
++++++      }
++++++
++++++      document.body.classList.remove('background-dark')
++++++      document.body.classList.add('background-light');
++++++
++++++  
++++++      if (lightSwitch.checked) {
++++++        lightSwitch.checked = false;
++++++      }
++++++      localStorage.setItem('lightSwitch', 'light');
++++++    }
++++++  
++++++    /**
++++++     * @function onToggleMode
++++++     * @summary: the event handler attached to the switch. calling @darkMode or @lightMode depending on the checked state.
++++++     */
++++++    function onToggleMode() {
++++++      if (lightSwitch.checked) {
++++++        darkMode();
++++++      } else {
++++++        lightMode();
++++++      }
++++++    }
++++++  
++++++    /**
++++++     * @function getSystemDefaultTheme
++++++     * @summary: get system default theme by media query
++++++     */
++++++    function getSystemDefaultTheme() {
++++++      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
++++++      if (darkThemeMq.matches) {
++++++        return 'dark';
++++++      }
++++++      return 'light';
++++++    }
++++++  
++++++    function setup() {
++++++      var settings = localStorage.getItem('lightSwitch');
++++++      if (settings == null) {
++++++        settings = getSystemDefaultTheme();
++++++      }
++++++  
++++++      if (settings == 'dark') {
++++++        lightSwitch.checked = true;
++++++      }
++++++  
++++++      lightSwitch.addEventListener('change', onToggleMode);
++++++      onToggleMode();
++++++    }
++++++  
++++++    setup();
++++++  })();
++++++  
+++++\ No newline at end of file
+++++diff --git a/js/top_rating_movie.js b/js/top_rating_movie.js
+++++new file mode 100644
+++++index 0000000..4e3b7b1
+++++--- /dev/null
++++++++ b/js/top_rating_movie.js
+++++@@ -0,0 +1,62 @@
++++++import movie_store from "./movie_store.js";
++++++import rating_movie from "./rating_movie.js";
++++++
++++++export default {
++++++    data() {
++++++        return {
++++++            query: "Top250Movies",
++++++            movie_store,
++++++            active_item: [],
++++++            nums: [],
++++++        }
++++++    },
++++++
++++++    components:{
++++++      rating_movie
++++++    },
++++++
++++++    methods:{
++++++      hideMain(item){
++++++        this.$emit('update',item);
++++++      },
++++++    },
++++++    mounted() {
++++++
++++++      var num_slide = 5;
++++++      var movies = [];
++++++      //BASE_URL + this.query + KEY_API
++++++      fetch(`https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7`).then(res => res.json().then(data => {
++++++          const len = data.items.length;
++++++          if(len >= 30) num_slide = 10;
++++++          else{
++++++            if(len > 15){
++++++              num_slide = len/3 + (len % 3 == 0? 0:1);
++++++            }
++++++        }
++++++
++++++        this.movie_store.topRating_movies = data.items.slice(0,num_slide*3);
++++++        this.active_item = this.movie_store.topRating_movies.slice(0,3);
++++++        this.movie_store.topRating_movies.splice(0,3);
++++++        
++++++        this.movie_store.topRating_movies = this.movie_store.topRating_movies.reduce((resultArray, item, index) => { 
++++++          const chunkIndex = Math.floor(index/3)
++++++        
++++++          if(!resultArray[chunkIndex]) {
++++++            resultArray[chunkIndex] = [] // start a new chunk
++++++          }
++++++        
++++++          resultArray[chunkIndex].push(item)
++++++        
++++++          return resultArray
++++++        }, [])
++++++
++++++        console.log(this.movie_store.topRating_movies);
++++++        this.nums = Array.from({length: num_slide},(_,i) => i)
++++++      }))
++++++        
++++++      },
++++++    template: `<nav class="navbar navbar-expand-lg navbar-light bg-transparent rounded">
++++++    <a class="navbar-brand" style="font-weight:600">Top Rating</a>
++++++    </nav>
++++++    <rating_movie :list='movie_store.topRating_movies' :nums='nums' :active_item='active_item' @transData='hideMain'/>`
++++++}
+++++\ No newline at end of file
+++++
+++++commit 57ecbd5b7d584e6473888a0802d0a4d0623fd758
+++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+++++Date:   Sun Oct 23 12:52:18 2022 +0700
+++++
+++++    upload js file
+++++
+++++diff --git a/gitlog.txt b/gitlog.txt
+++++new file mode 100644
+++++index 0000000..183f8f8
+++++--- /dev/null
++++++++ b/gitlog.txt
+++++@@ -0,0 +1,317 @@
++++++commit 1688072c738241f0235e5529890a52b080f8210b
++++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++++Date:   Sun Oct 23 12:50:54 2022 +0700
++++++
++++++    Upload main body and popular movies
++++++
++++++diff --git a/js/main_body.js b/js/main_body.js
++++++new file mode 100644
++++++index 0000000..62463da
++++++--- /dev/null
+++++++++ b/js/main_body.js
++++++@@ -0,0 +1,29 @@
+++++++import latest_movie from "./latest_movie.js"
+++++++import popular_movie from "./popular_movie.js"
+++++++import top_rating_movie from "./top_rating_movie.js"
+++++++
+++++++export default {
+++++++    data() {
+++++++        return {
+++++++
+++++++        }
+++++++    },
+++++++    components: {
+++++++        latest_movie,
+++++++        popular_movie,
+++++++        top_rating_movie
+++++++    },
+++++++    methods:{
+++++++        forward(data){
+++++++            this.$emit('update',data);
+++++++        }
+++++++    },
+++++++
+++++++    mounted(){
+++++++        $('.carousel-item').first().addClass('active');  
+++++++    },
+++++++    template:
+++++++    `<latest_movie @update="forward"/>
+++++++    <popular_movie @update="forward"/>
+++++++    <top_rating_movie @update="forward"/>`
+++++++}
++++++\ No newline at end of file
++++++diff --git a/js/popular_movie.js b/js/popular_movie.js
++++++new file mode 100644
++++++index 0000000..7d880b1
++++++--- /dev/null
+++++++++ b/js/popular_movie.js
++++++@@ -0,0 +1,97 @@
+++++++import movie_store from "./movie_store.js";
+++++++
+++++++export default {
+++++++    data() {
+++++++        return {
+++++++            query: "MostPopularMovies",
+++++++            movie_store,
+++++++            active_item: [],
+++++++            nums: [],
+++++++        }
+++++++    },
+++++++
+++++++    methods:{
+++++++      hideMain(item){
+++++++        this.$emit('update','detail_movie');
+++++++        this.movie_store.id_cur_movie = item.id;
+++++++    },
+++++++    },
+++++++    mounted() {
+++++++      function chunk (items, size) {  
+++++++        const chunks = []
+++++++        items = [].concat(...items)
+++++++      
+++++++        while (items.length) {
+++++++          chunks.push(
+++++++            items.splice(0, size)
+++++++          )
+++++++        }
+++++++      
+++++++        return chunks
+++++++      }
+++++++
+++++++      var num_slide = 5;
+++++++      var movies = [];
+++++++        (async () => {
+++++++           //BASE_URL + this.query + KEY_API
+++++++          const res = await fetch(`https://mocki.io/v1/d5694cf4-348f-43f6-be7d-38b325fe98d7`);
+++++++          const data = await res.json();
+++++++          movies = data.items;
+++++++          const len = data.items.length;
+++++++          if(len >= 30) num_slide = 10;
+++++++          else{
+++++++            if(len > 15){
+++++++              num_slide = len/3 + (len % 3 == 0? 0:1);
+++++++            }
+++++++        }
+++++++
+++++++        this.movie_store.popular_movies = movies.slice(0,num_slide*3);
+++++++        this.active_item = this.movie_store.popular_movies.slice(0,3);
+++++++        this.movie_store.popular_movies.splice(0,3);
+++++++        this.movie_store.popular_movies = chunk(this.movie_store.popular_movies,3)
+++++++        console.log(this.movie_store.popular_movies);
+++++++        this.nums = Array.from(Array(num_slide).keys())
+++++++      })();
+++++++        
+++++++      },
+++++++    template: `<nav class="navbar navbar-expand-lg navbar-light bg-transparent rounded">
+++++++    <a class="navbar-brand" style="font-weight:600">Most Popular</a>
+++++++    </nav>
+++++++    
+++++++    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+++++++    <ol class="carousel-indicators indicator">
+++++++            <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
+++++++            <li data-target="#carouselExampleControls" :data-slide-to="num+1" v-for="num in this.nums"></li>
+++++++        </ol>
+++++++    <div class="carousel-inner">
+++++++      <div class="carousel-item active">
+++++++        <div class="cards-wrapper">
+++++++        <div class="card text-white bg-dark d-none d-md-block" v-for="item in active_item" @click="hideMain(item)">
+++++++          <img :src="item.image" class="card-img-top" alt="...">
+++++++          <div class="card-body disabled">
+++++++              <p class="card-text">{{item.fullTitle}}</p>
+++++++            </div>
+++++++        </div>
+++++++      </div>
+++++++      </div>
+++++++      <div class="carousel-item" v-for="items in this.movie_store.popular_movies">
+++++++        <div class="cards-wrapper">
+++++++          <div class="card text-white bg-dark d-none d-md-block" v-for="item in items" @click="hideMain(item)">
+++++++            <img :src="item.image" class="card-img-top" alt="...">
+++++++            <div class="card-body disabled">
+++++++              <p class="card-text">{{item.fullTitle}}</p>
+++++++            </div>
+++++++          </div>
+++++++        </div>
+++++++      </div>
+++++++    </div>
+++++++    <a class="carousel-control-prev prev" href="#carouselExampleControls" role="button" data-slide="prev">
+++++++      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+++++++      <span class="sr-only">Previous</span>
+++++++    </a>
+++++++    <a class="carousel-control-next next" href="#carouselExampleControls" role="button" data-slide="next">
+++++++      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+++++++      <span class="sr-only">Next</span>
+++++++    </a>
+++++++  </div>`
+++++++}
++++++\ No newline at end of file
++++++
++++++commit f31501ca3bf8f7a2db5a384aa9f5ad086704d9cb
++++++Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++++Date:   Sun Oct 23 12:48:26 2022 +0700
++++++
++++++    Initial Commit
++++++
++++++diff --git a/index.html b/index.html
++++++new file mode 100644
++++++index 0000000..43bf981
++++++--- /dev/null
+++++++++ b/index.html
++++++@@ -0,0 +1,56 @@
+++++++<!DOCTYPE html>
+++++++<html lang="en">
+++++++
+++++++<head>
+++++++  <meta charset="UTF-8">
+++++++  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+++++++  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+++++++  <link rel="stylesheet" href="style.css">
+++++++  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+++++++    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+++++++    
+++++++  <title>Movies Info</title>
+++++++</head>
+++++++
+++++++<body>
+++++++
+++++++  <div class="bootstrap">
+++++++
+++++++  </div>
+++++++
+++++++  <script type="importmap">
+++++++    {
+++++++      "imports": {
+++++++        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+++++++      }
+++++++    }
+++++++  </script>
+++++++  <script type="module">
+++++++    import { createApp } from 'vue'
+++++++    import MyComponent from './js/main.js'
+++++++    
+++++++    createApp(MyComponent).mount('.bootstrap')
+++++++  </script>
+++++++  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+++++++    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+++++++    crossorigin="anonymous"></script>
+++++++  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+++++++    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+++++++    crossorigin="anonymous"></script>
+++++++  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+++++++  <link
+++++++      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+++++++      rel="stylesheet"
+++++++      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+++++++      crossorigin="anonymous"
+++++++    />
+++++++    
+++++++  <script>
+++++++    const KEY_API = '/k_jro07wuj';
+++++++    const BASE_URL = 'https://imdb-api.com/en/API/';
+++++++    
+++++++
+++++++  </script>
+++++++</body>
+++++++
+++++++</html>
++++++\ No newline at end of file
++++++diff --git a/js/header_nav.js b/js/header_nav.js
++++++new file mode 100644
++++++index 0000000..bc918da
++++++--- /dev/null
+++++++++ b/js/header_nav.js
++++++@@ -0,0 +1,53 @@
+++++++
+++++++import movie_store from "./movie_store.js"
+++++++
+++++++export default {
+++++++    data() {
+++++++        return {
+++++++          movie_store,
+++++++          name: ["search_view","main_body"]
+++++++        }
+++++++    },
+++++++    methods: {
+++++++      
+++++++      seekInfo(data){
+++++++          this.$emit("loadSearch",this.name[parseInt(data)])
+++++++        
+++++++        console.log(this.name[parseInt(data)])
+++++++      },
+++++++
+++++++    },
+++++++    mounted(){
+++++++      $(function(){
+++++++    
+++++++        var twoToneButton = document.querySelector('.twoToneButton');
+++++++        
+++++++        twoToneButton.addEventListener("click", function() {
+++++++            twoToneButton.classList.add('spinning');
+++++++            
+++++++          setTimeout( 
+++++++                function  (){  
+++++++                    twoToneButton.classList.remove('spinning');
+++++++                }, 6000);
+++++++        }, false);
+++++++        
+++++++        }); 
+++++++    },
+++++++    template: `
+++++++    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+++++++      <a class="navbar-brand home twoToneButton"  @click="seekInfo(1)">Home</a>
+++++++      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+++++++        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+++++++        <span class="navbar-toggler-icon"></span>
+++++++      </button>
+++++++
+++++++      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+++++++        <ul class="navbar-nav mr-auto">
+++++++        </ul>
+++++++        <form class="form-inline my-2 my-lg-0" onsubmit="return false;">
+++++++          <input v-model="this.movie_store.query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+++++++          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="seekInfo(0)">Search</button>
+++++++        </form>
+++++++      </div>
+++++++    </nav>`
+++++++}
++++++\ No newline at end of file
++++++diff --git a/js/super_header.js b/js/super_header.js
++++++new file mode 100644
++++++index 0000000..3943d27
++++++--- /dev/null
+++++++++ b/js/super_header.js
++++++@@ -0,0 +1,34 @@
+++++++
+++++++export default {
+++++++    data() {
+++++++        return {
+++++++
+++++++        }
+++++++    },
+++++++
+++++++    mounted(){
+++++++        $('<script>',{src: './js/switch.js'}).appendTo('head');
+++++++    },
+++++++
+++++++    methods: {
+++++++
+++++++    },
+++++++    template: `
+++++++    <nav class="navbar navbar-light bg-light super-head rounded">
+++++++        <div class="header-menu-container">
+++++++            <a class="navbar-brand sub-title" href="#">20120234</a>
+++++++            <a class="navbar-brand title" href="#">Movies info</a>
+++++++            <div class="right-container">
+++++++                <a class="navbar-brand sub-title" href="#">k_jro07wuj</a>
+++++++                <div class="d-flex">
+++++++                    <div class="form-check form-switch">
+++++++                        <input class="form-check-input" type="checkbox" id="lightSwitch" />
+++++++                        <label class="form-check-label ms-3 navbar-brand sub-title"  for="lightSwitch">
+++++++                           Dark mode
+++++++                        </label>
+++++++                    </div>
+++++++                </div>
+++++++            </div>
+++++++        </div>
+++++++    </nav>`
+++++++}
++++++\ No newline at end of file
+++++diff --git a/js/body_main.js b/js/body_main.js
+++++new file mode 100644
+++++index 0000000..d82111a
+++++--- /dev/null
++++++++ b/js/body_main.js
+++++@@ -0,0 +1,41 @@
++++++import person_store from "./person_store.js"
++++++
++++++export default {
++++++    data() {
++++++        return {
++++++          person_store,
++++++        }
++++++    },
++++++
++++++    methods:{
++++++      changeComponent(p){
++++++        this.person_store.current_component = 'detail_display'
++++++        this.person_store.current_person = p
++++++        $('.pagination-nav').hide()
++++++      }
++++++    },
++++++    template: `<table class="table table-striped">
++++++    <thead class="thead-dark">
++++++      <tr> 
++++++        <th scope="col">#</th>
++++++        <th scope="col">First name</th>
++++++        <th scope="col">Last name</th>
++++++        <th scope="col">Email</th>
++++++        <th scope="col">Avatar</th>
++++++      </tr>
++++++    </thead>
++++++    <tbody>
++++++    <tr v-for="p in person_store.persons" @click="changeComponent(p)">
++++++      <th scope="col">{{p.id}}</th>
++++++      <td>{{p.first_name}}</td>
++++++      <td>{{p.last_name}}</td>
++++++      <td>{{p.email}}</td>
++++++      <td>
++++++        <img :src="p.avatar" :alt="p.id"/>
++++++      </td>
++++++    </tr>
++++++    </tbody>
++++++  </table>
++++++  
++++++  `
++++++}
+++++\ No newline at end of file
+++++diff --git a/js/body_pagination.js b/js/body_pagination.js
+++++new file mode 100644
+++++index 0000000..f793494
+++++--- /dev/null
++++++++ b/js/body_pagination.js
+++++@@ -0,0 +1,43 @@
++++++import {defineComponent, inject, computed} from 'vue'
++++++export default defineComponent({ 
++++++    setup(){
++++++      const total_slide = computed({ 
++++++        get: () => inject('getSlide').value,
++++++        set: inject('updateSlide')
++++++      })
++++++
++++++      const items  = Array.from({ length: total_slide.value }, (_, i) => i + 1)
++++++
++++++      return {
++++++        total_slide,
++++++        items
++++++      }
++++++    },
++++++
++++++    methods:{
++++++      load(n){
++++++        this.$emit("loadPage",n)
++++++      }
++++++    },
++++++    
++++++    template: `
++++++    <nav class="pagination-nav" aria-label="Page navigation example">
++++++    <ul class="pagination">
++++++      <li class="page-item previous">
++++++        <a class="page-link" href="#" aria-label="Previous">
++++++          <span aria-hidden="true">&laquo;</span>
++++++          <span class="sr-only">Previous</span>
++++++        </a>
++++++      </li>
++++++        
++++++      <li v-for="n in items" class="page-item num" @click="load(n)"><a class="page-link" href="#">{{n}}</a></li>
++++++      
++++++      <li class="page-item next">
++++++        <a class="page-link" href="#" aria-label="Next">
++++++          <span aria-hidden="true">&raquo;</span>
++++++          <span class="sr-only">Next</span>
++++++        </a>
++++++      </li>
++++++    </ul>
++++++  </nav>`
++++++})
+++++\ No newline at end of file
+++++diff --git a/style.css b/style.css
+++++new file mode 100644
+++++index 0000000..d0b246c
+++++--- /dev/null
++++++++ b/style.css
+++++@@ -0,0 +1,292 @@
++++++*{
++++++    margin: 0;
++++++    padding: 0;
++++++    box-sizing: border-box;
++++++}
++++++
++++++body{
++++++    width: 100%;
++++++    height: 100%;
++++++    padding-top: 5px;
++++++    display: flex;
++++++    justify-content: center;
++++++    align-items: center;
++++++}
++++++
++++++
++++++.bootstrap{
++++++    width: 100%;
++++++    max-width: 1200px;
++++++    height: 100%;
++++++    
++++++}
++++++
++++++.super-head{
++++++    margin-bottom: 10px;
++++++}
++++++
++++++.header-menu-container{
++++++    width: 100%;
++++++    height: 100%;
++++++    display: flex;
++++++    justify-content: space-between;
++++++    align-items: center;
++++++    flex-wrap: wrap;
++++++}
++++++
++++++.right-container
++++++{
++++++    display: flex;
++++++    flex-direction: column;
++++++    justify-content: flex-end;
++++++    align-items: flex-end;
++++++}
++++++
++++++.title{
++++++    font-size: 1.8rem !important;
++++++    font-weight: 600;
++++++}
++++++
++++++#lightSwitch {
++++++    transform: scale(1.2);
++++++  }
++++++  
++++++.sub-title{
++++++    text-decoration: none;
++++++    font-size: 1rem !important;
++++++}
++++++
++++++.d-flex{
++++++    margin-left: 10px;
++++++}
++++++
++++++.background-light {
++++++    background-color: #b8b5b6;
++++++}
++++++  
++++++.background-dark {
++++++    background-color: rgb(44, 43, 43);
++++++}
++++++
++++++.form-check-input{
++++++    margin-top: 10px !important;
++++++}
++++++
++++++.bg-dark{
++++++    border: 1px solid rgba(255, 255, 255, 0.212);
++++++}
++++++
++++++.footer{
++++++    margin-top: 10px;
++++++    display: flex !important;
++++++    justify-content: center !important;
++++++    align-items: center !important;
++++++}
++++++
++++++.carousel{
++++++    margin-bottom: 100px;
++++++}
++++++
++++++.home{
++++++    cursor: pointer;
++++++}
++++++
++++++.cards-wrapper {
++++++    display: flex;
++++++    justify-content: center;
++++++  }
++++++  .card img {
++++++    max-width: 100%;
++++++    max-height: 100%;
++++++  }
++++++  .card {
++++++    margin: 0 0.5em;
++++++    box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
++++++    border: none;
++++++    border-radius: 0;
++++++  }
++++++  .carousel-inner {
++++++    padding: 1em;
++++++  }
++++++
++++++  .card:hover
++++++  {
++++++    transform: scale(1.8);
++++++    min-height: 750px !important;
++++++    width: 100%;
++++++    height: auto;
++++++    padding-top: 140px !important;
++++++    z-index: 1;
++++++  }
++++++
++++++  .card:hover img{
++++++    object-fit: fill !important;
++++++  }
++++++
++++++  .card:not(:hover){
++++++    width: 100%;
++++++    height: 100%;
++++++  }
++++++
++++++  .indicator{
++++++    position: relative !important;
++++++    justify-content: flex-end !important;
++++++    align-items: flex-start !important;
++++++    left: 80px !important;
++++++  }
++++++
++++++
++++++.active,
++++++.active h3{
++++++  width: 100%;
++++++  display: flex !important;
++++++  justify-content: center !important;
++++++  align-items: center !important;
++++++}
++++++
++++++.active h3{
++++++  margin-left: 20px !important;
++++++}
++++++
++++++.first-carousel img{
++++++  height: 600px !important;
++++++  margin-left: 30px !important;
++++++  object-fit: contain !important;
++++++}
++++++
++++++.latest-indicator{
++++++  margin-bottom: 60px !important;
++++++  padding-left: 40px !important;
++++++}
++++++
++++++.active h3{
++++++  margin-bottom: 30px !important;
++++++}
++++++
++++++.card img{
++++++  min-width: 340px;
++++++  max-height: 400px;
++++++}
++++++
++++++.prev{
++++++  padding-right: 130px !important;
++++++}
++++++
++++++.next{
++++++  padding-left: 150px !important;
++++++}
++++++
++++++.disabled{
++++++  display: none;
++++++}
++++++ 
++++++.card:hover .disabled{
++++++  display: block;
++++++  text-align: center;
++++++}
++++++
++++++.search-container{
++++++  width: 100%;
++++++  display: flex;
++++++  flex-wrap: wrap;
++++++  justify-content: flex-start;
++++++  align-items: flex-start;
++++++  margin-top: 20px;
++++++}
++++++
++++++.search-container > div{
++++++  margin-right: 10px;
++++++}
++++++
++++++.movie-container{
++++++  width: 100%;
++++++  margin-top: 10px;
++++++  display: flex;
++++++  justify-content: center;
++++++  align-items: center;
++++++}
++++++
++++++.img-movie{
++++++  display: flex;
++++++  justify-content: center;
++++++  align-items: center;
++++++}
++++++
++++++.review{
++++++  max-height: 400px !important;
++++++  overflow: scroll;
++++++  text-align: justify;
++++++}
++++++
++++++.twoToneButton {
++++++  display: inline-block;
++++++  outline: none;
++++++  padding: 10px 20px;
++++++  line-height: 1.4;
++++++  position: relative;
++++++  transition: padding-right 0.3s ease;
++++++}
++++++
++++++.twoToneButton.spinning {
++++++  padding-right: 40px;
++++++}
++++++
++++++.review-title{
++++++  font-size: 2rem;
++++++  margin-bottom: 20px;
++++++  padding-left: 20px;
++++++}
++++++
++++++.twoToneButton.spinning:after {
++++++  content: "";
++++++  right: 6px;
++++++  top: 50%;
++++++  width: 0;
++++++  height: 0;
++++++  position: absolute;
++++++  border-radius: 50%;
++++++  -webkit-animation: rotate360 0.5s infinite linear, exist 0.1s forwards ease;
++++++          animation: rotate360 0.5s infinite linear, exist 0.1s forwards ease;
++++++}
++++++
++++++
++++++.twoToneButton.spinning:before {
++++++  content: "";
++++++  width: 0px;
++++++  height: 0px;
++++++  border-radius: 50%;
++++++  right: 6px;
++++++  top: 50%;
++++++  position: absolute;
++++++  border: 2px solid #000000;
++++++  border-right: 3px solid #27ae60;
++++++  -webkit-animation: rotate360 0.5s infinite linear, exist 0.1s forwards ease;
++++++          animation: rotate360 0.5s infinite linear, exist 0.1s forwards ease;
++++++}
++++++@-webkit-keyframes rotate360 {
++++++  100% {
++++++    transform: rotate(360deg);
++++++  }
++++++}
++++++@keyframes rotate360 {
++++++  100% {
++++++    transform: rotate(360deg);
++++++  }
++++++}
++++++@-webkit-keyframes exist {
++++++  100% {
++++++    width: 15px;
++++++    height: 15px;
++++++    margin: -8px 5px 0 0;
++++++  }
++++++}
++++++@keyframes exist {
++++++  100% {
++++++    width: 15px;
++++++    height: 15px;
++++++    margin: -8px 5px 0 0;
++++++  }
++++++}
++++++body {
++++++  background: #212121;
++++++}
+++++
++++ commit 1688072c738241f0235e5529890a52b080f8210b
++++ Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++++ Date:   Sun Oct 23 12:50:54 2022 +0700
++++
+++ commit 630bcc5d43a409cfab83ff2e152cabd9e95a43be
+++ Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+++ Date:   Sun Oct 23 12:53:43 2022 +0700
+++
++ commit 2d260619db7ef7c4f978ea9c6ab12d483d67dfe4
++ Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
++ Date:   Sun Oct 23 17:00:20 2022 +0700
++
+ commit 75342246e5ca706fab6b9fd1b33e1c73ae8efd92
+ Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
+ Date:   Sun Oct 23 19:10:24 2022 +0700
+
 commit 34b6c73ee32f91b72f3951944d3313c735d6271f
 Author: ngonguyenquangtu <20120234@student.hcmus.edu.vn>
 Date:   Sun Oct 23 20:11:22 2022 +0700

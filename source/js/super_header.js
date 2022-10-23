@@ -19,7 +19,7 @@ export default {
             <a class="navbar-brand sub-title" href="#">20120234</a>
             <a class="navbar-brand title" href="#">Movies info</a>
             <div class="right-container">
-                <a class="navbar-brand sub-title" href="#">k_jro07wuj</a>
+                <a class="navbar-brand sub-title" href="#">k_gv87tkjj</a>
                 <div class="d-flex">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="lightSwitch" />

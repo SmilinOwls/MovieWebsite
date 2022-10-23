@@ -35,5 +35,25 @@ export default {
                 </div>
             </div>
         </div>
-    </div>`
+    </div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr> 
+                <th scope="col">ID</th>
+                <th scope="col">Role</th>
+                <th scope="col">Title</th>
+                <th scope="col">Year</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="actor in this.movie_store.current_actor.castMovies">
+                <th scope="col">{{actor.id}}</th>
+                <td>{{actor.role}}</td>
+                <td>{{actor.title}}</td>
+                <td>{{actor.year}}</td>
+                <td>{{actor.description}}</td>
+            </tr>
+        </tbody>
+  </table>`
 }
